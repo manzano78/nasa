@@ -1,5 +1,6 @@
 export interface ApiNearEarthObjectList {
   near_earth_objects: Array<{
+    id: string
     name: string;
     estimated_diameter: {
       kilometers: {

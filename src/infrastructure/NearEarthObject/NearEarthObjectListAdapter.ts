@@ -9,6 +9,7 @@ export function toNearEarthObjectList(
 
   return apiNearEarthObjects.map((apiNearEarthObject) => {
     const {
+      id,
       name,
       estimated_diameter: {
         kilometers: {
@@ -26,6 +27,7 @@ export function toNearEarthObjectList(
     });
 
     return {
+      id,
       name,
       orbitingBodies,
       estimatedDiameterInKM: {

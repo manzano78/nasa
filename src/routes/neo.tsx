@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react'
 import {
   json,
   LinksFunction,
@@ -12,10 +12,13 @@ import { NearEarthObjectRepositoryImpl } from '~/infrastructure/NearEarthObject/
 import { getNearEarthObjectListSortedByAverageDiameterDesc } from '~/application/NearEarthObject/GetNearEarthObjectList';
 import { NearEarthObjectsChart } from '~/view/molecules/NearEarthObjectsChart';
 import neoPageStylesUrl from '~/view/styles/neoPageStyles.css';
-import { Select } from '../view/atoms/Select';
+import { Select } from '~/view/atoms/Select';
+import { RadioButtonGroup } from '~/view/atoms/RadioButtonGroup';
+import { NearEarthObjectsTable } from '~/view/molecules/NearEarthObjectsTable';
 
 interface NearEarthObjectsRouteData {
   nearEarthObjects: Array<{
+    id: string;
     name: string;
     estimatedDiameterInKM: {
       min: number;
@@ -32,7 +35,19 @@ interface NearEarthObjectsRouteData {
   selectedOrbitingBody?: string;
 }
 
+type ViewMode = 'table' | 'chart';
+
 const selectedOrbitingBodyParamName = 'selectedOrbitingBody';
+const viewModeOptions = [
+  {
+    value: 'chart',
+    label: 'Chart',
+  },
+  {
+    value: 'table',
+    label: 'Table',
+  }
+];
 
 export const meta: MetaFunction = () => ({
   title: 'Near Earth Objects',
@@ -96,6 +111,7 @@ export default function NearEarthObjectsRoute() {
     orbitingBodies,
   } = useLoaderData<NearEarthObjectsRouteData>();
   const submit = useSubmit();
+  const [viewMode, setViewMode] = useState<ViewMode>('chart');
   const transition = useTransition();
   const orbitingBodyOptions = useMemo(() => {
     return orbitingBodies.map((orbitingBody) => ({
@@ -124,17 +140,34 @@ export default function NearEarthObjectsRoute() {
           defaultValue={selectedOrbitingBody}
           loading={isLoading}
         />
+        <RadioButtonGroup
+          value={viewMode}
+          options={viewModeOptions}
+          onChange={(viewMode) => setViewMode(viewMode as ViewMode)}
+          className='view-mode-select'
+        />
       </div>
-      <NearEarthObjectsChart
-        nearEarthObjects={nearEarthObjects}
-        minEstimatedDiameterLabel={minEstimatedDiameterLabel}
-        maxEstimatedDiameterLabel={maxEstimatedDiameterLabel}
-        nearEarthObjectsNameLabel={nearEarthObjectsNameLabel}
-        estimatedDiameterLabel={estimatedDiameterLabel}
-        title={title}
-        width={800}
-        height={600}
-      />
+      <div className='neo-data-container'>
+        {viewMode === 'chart' ? (
+          <NearEarthObjectsChart
+            nearEarthObjects={nearEarthObjects}
+            minEstimatedDiameterLabel={minEstimatedDiameterLabel}
+            maxEstimatedDiameterLabel={maxEstimatedDiameterLabel}
+            nearEarthObjectsNameLabel={nearEarthObjectsNameLabel}
+            estimatedDiameterLabel={estimatedDiameterLabel}
+            title={title}
+            width={800}
+            height={600}
+          />
+        ) : (
+          <NearEarthObjectsTable
+            nearEarthObjects={nearEarthObjects}
+            minEstimatedDiameterLabel={minEstimatedDiameterLabel}
+            maxEstimatedDiameterLabel={maxEstimatedDiameterLabel}
+            nearEarthObjectsNameLabel={nearEarthObjectsNameLabel}
+          />
+        )}
+      </div>
     </>
   );
 }

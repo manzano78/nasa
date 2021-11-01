@@ -4,6 +4,7 @@ import { Chart } from './Chart';
 
 interface NearEarthObjectsChartProps {
   nearEarthObjects: Array<{
+    id: string
     name: string;
     estimatedDiameterInKM: {
       min: number;
