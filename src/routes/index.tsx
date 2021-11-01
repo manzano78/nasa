@@ -1,3 +1,3 @@
-export default function IndexRoute() {
-  return null;
-}
+import { redirect } from 'remix';
+
+export const loader = () => redirect('/neo');

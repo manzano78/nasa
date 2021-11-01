@@ -1,7 +1,7 @@
 {
   "private": true,
-  "name": "remix-app-template",
-  "description": "",
+  "name": "nasa",
+  "description": "nasa test app",
   "license": "",
   "scripts": {
     "build": "remix build",
@@ -13,22 +13,23 @@
     "prettier:write": "prettier --write '*/**/*.{ts,tsx,js}'"
   },
   "dependencies": {
-    "@remix-run/cloudflare-workers": "^0.19.3",
-    "@remix-run/react": "^0.19.3",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-router-dom": "6.0.0-beta.6",
-    "remix": "^0.19.3"
+    "@remix-run/cloudflare-workers": "0.20.1",
+    "@remix-run/react": "0.20.1",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-google-charts": "3.0.15",
+    "react-router-dom": "6.0.0-beta.8",
+    "remix": "0.19.3"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^2.2.2",
-    "@remix-run/dev": "^0.19.3",
-    "@types/react": "^17.0.24",
-    "@types/react-dom": "^17.0.9",
-    "esbuild": "^0.13.0",
-    "miniflare": "^1.4.1",
+    "@cloudflare/workers-types": "2.2.2",
+    "@remix-run/dev": "0.19.3",
+    "@types/react": "17.0.24",
+    "@types/react-dom": "17.0.9",
+    "esbuild": "0.13.0",
+    "miniflare": "1.4.1",
     "prettier": "2.4.1",
-    "typescript": "^4.1.2"
+    "typescript": "4.1.2"
   },
   "engines": {
     "node": ">=14"
