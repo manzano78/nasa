@@ -19,12 +19,45 @@ function sortNearEarthObjectListByAverageDiameterDesc(
   });
 }
 
+function filterByOrbitingBody(
+  nearEarthObjectList: NearEarthObject[],
+  orbitingBody: string
+): NearEarthObject[] {
+  return nearEarthObjectList.filter((nearEarthObject) =>
+    nearEarthObject.orbitingBodies.includes(orbitingBody)
+  );
+}
+
+function getOrbitingBodyList(nearEarthObjectList: NearEarthObject[]): string[] {
+  const orbitingBodies = nearEarthObjectList.reduce(
+    (orbitingBodyList, nearEarthObject) => {
+      for (const orbitingBody of nearEarthObject.orbitingBodies) {
+        orbitingBodyList.add(orbitingBody);
+      }
+
+      return orbitingBodyList;
+    },
+    new Set<string>()
+  );
+
+  return Array.from(orbitingBodies);
+}
+
 export async function getNearEarthObjectListSortedByAverageDiameterDesc(
-  nearEarthObjectRepository: NearEarthObjectRepository
-): Promise<Array<NearEarthObject>> {
-  const nearEarthObjectList = await nearEarthObjectRepository.getList();
+  nearEarthObjectRepository: NearEarthObjectRepository,
+  orbitingBody?: string
+): Promise<[nearEarthObjects: NearEarthObject[], orbitingBodyList: string[]]> {
+  let nearEarthObjectList = await nearEarthObjectRepository.getList();
+  const orbitingBodyList = getOrbitingBodyList(nearEarthObjectList);
+
+  if (orbitingBody) {
+    nearEarthObjectList = filterByOrbitingBody(
+      nearEarthObjectList,
+      orbitingBody
+    );
+  }
 
   sortNearEarthObjectListByAverageDiameterDesc(nearEarthObjectList);
 
-  return nearEarthObjectList;
+  return [nearEarthObjectList, orbitingBodyList];
 }

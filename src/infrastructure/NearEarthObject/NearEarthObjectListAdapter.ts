@@ -16,10 +16,18 @@ export function toNearEarthObjectList(
           estimated_diameter_min: minDiameterInKM,
         },
       },
+      close_approach_data: closeApproachList,
     } = apiNearEarthObject;
+
+    const orbitingBodies = closeApproachList.map((closeApproach) => {
+      const { orbiting_body: orbitingBody } = closeApproach;
+
+      return orbitingBody;
+    });
 
     return {
       name,
+      orbitingBodies,
       estimatedDiameterInKM: {
         min: minDiameterInKM,
         max: maxDiameterInKM,

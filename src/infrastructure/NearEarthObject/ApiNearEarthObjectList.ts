@@ -7,5 +7,8 @@ export interface ApiNearEarthObjectList {
         estimated_diameter_max: number;
       };
     };
+    close_approach_data: Array<{
+      orbiting_body: string;
+    }>;
   }>;
 }
