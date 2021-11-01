@@ -1,0 +1,16 @@
+name = "nasa"
+type = "javascript"
+
+account_id = "de4bf034c91defbeab410eb0d19bb247"
+workers_dev = true
+
+[site]
+bucket = "./public"
+entry-point = "."
+
+[build]
+command = "npm run build:worker"
+watch_dir = "build"
+
+[build.upload]
+format="service-worker"
