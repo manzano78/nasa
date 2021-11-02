@@ -1,7 +1,7 @@
-# Welcome to Remix!
+# Welcome!
 
 - [Remix Docs](https://docs.remix.run)
-- [Customer Dashboard](https://remix.run/dashboard)
+- [Ant Design Docs](https://ant.design/)
 
 ## Development
 
